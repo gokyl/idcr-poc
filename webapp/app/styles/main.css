@@ -293,3 +293,48 @@ legend {
 .panel-patient .table > tfoot > tr > td:last-child {
   border-right: 0;
 }
+
+
+.table-filters {
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.table-footer {
+  margin: 10px 0;
+  padding: 0px;
+}
+
+.table-bordered thead th > .th {
+  position: relative;
+  padding-right: 20px;
+}
+
+.table-bordered thead th .fa-angle-up,
+.table-bordered thead th .fa-angle-down {
+  position: absolute;
+  color: #999;
+  font-size: 16px;
+  font-weight: bold;
+}
+.table-bordered thead th .fa-angle-up:hover,
+.table-bordered thead th .fa-angle-down:hover {
+  color: #1C7EBB;
+  cursor: pointer;
+}
+.table-bordered thead th .fa-angle-up.active,
+.table-bordered thead th .fa-angle-down.active {
+  color: #1C7EBB;
+}
+.table-bordered thead th .fa-angle-up {
+  top: -2px;
+  right: 5px;
+}
+.table-bordered thead th .fa-angle-down {
+  top: 8px;
+  right: 5px;
+}
+
+.no-margin{
+  margin:0px !important;
+}

@@ -1,26 +1,77 @@
 <h4>Problem / Issues / Diagnoses</h4>
 
+<div class="table-filters">
+  <div class="row">
+    <div class="col-sm-6">
+      <form>
+        <input type="text"
+               placeholder="Search..."
+               class="form-control"
+               data-ng-model="searchKeywords"
+               data-ng-keyup="search()">
+      </form>
+    </div>
+    <div class="col-sm-6 filter-result-info">
+      <span>Showing {{filteredDiagnoses.length}}/{{patient.diagnoses.length}} entries</span>
+    </div>
+  </div>
+</div>
+
 <table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
-      <th>Date</th>
+      <th>
+        <div class="th">Date
+          <span class="fa fa-angle-up"
+                data-ng-click=" order('dateOfOnset') "
+                data-ng-class="{active: row == 'dateOfOnset'}"></span>
+          <span class="fa fa-angle-down"
+                data-ng-click=" order('-dateOfOnset') "
+                data-ng-class="{active: row == '-dateOfOnset'}"></span>
+        </div>
+      </th>
       <th>Record</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <tr ng-repeat="diagnosis in patient.diagnoses | orderBy:'-dateOfOnset'" ng-click="go('/patients/{{patient.id}}/diagnoses/{{diagnosis.id}}')" ng-class="{info: selected(diagnosis)}">
+  <tr ng-repeat="diagnosis in currentPageDiagnoses" ng-click="go('/patients/{{patient.id}}/diagnoses/{{diagnosis.id}}')" ng-class="{info: selected(diagnosis)}">
       <td>{{ diagnosis.dateOfOnset | date:'dd-MMM-yyyy' }}</td>
       <td>{{ diagnosis.problemDiagnosis }}</td>
       <td><i class="fa fa-fw" ng-class="selected(diagnosis) ? 'fa-folder-open' : 'fa-folder'"></i></td>
     </tr>
 
-    <tr ng-if="! patient.diagnoses || ! patient.diagnoses.length">
+  <tr ng-if="! filteredDiagnoses || ! filteredDiagnoses.length">
       <td colspan="3"><span class="label label-default">No diagnoses</span></td>
     </tr>
   </tbody>
 </table>
+
+<footer class="table-footer">
+  <div class="row">
+    <div class="col-md-3 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                    </span>
+    </div>
+    <div class="col-md-9 text-right pagination-container">
+      <pagination class="pagination-sm no-margin"
+                  ng-model="currentPage"
+                  total-items="filteredDiagnoses.length"
+                  max-size="4"
+                  ng-change="select(currentPage)"
+                  items-per-page="numPerPage"
+                  rotate="false"
+                  previous-text="&lsaquo;" next-text="&rsaquo;"
+                  boundary-links="true"></pagination>
+    </div>
+  </div>
+</footer>
 
 <div class="text-right">
   <button class="btn btn-info" ng-click="create();"><i class="fa fa-plus"></i> Create</button>
